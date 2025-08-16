@@ -1,0 +1,16 @@
+# Python
+api/.venv/
+__pycache__/
+*.pyc
+
+# Node
+web/node_modules/
+web/dist/
+
+# Env / secretos
+api/.env
+web/.env.local
+
+# (Recomendado) NO subir índices grandes a GitHub
+
+api/data/mapping.jsonl

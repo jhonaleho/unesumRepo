@@ -29,7 +29,7 @@ export default function App() {
     setLoading(true);
     setError(null);
      try {
-    const { results } = await search(debouncedQ, 10, c.signal);
+    const { results } = await search(debouncedQ, 10, { signal: c.signal });
     setResults(results);
   } catch (e: any) {
     // ⬇️ Ignore cancellations triggered by typing
@@ -112,6 +112,7 @@ export default function App() {
 
       <footer style={{ marginTop: '2rem', opacity: 0.7, fontSize: '0.9rem' }}>
         API: <code>{import.meta.env.VITE_API_BASE ?? '(same origin)'}</code>
+
       </footer>
     </div>
   )

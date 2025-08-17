@@ -2,7 +2,7 @@
 import type { SearchResponse } from "./types";
 
 /** ===== Config ===== */
-const RAW_BASE = (import.meta.env as any)?.VITE_API_BASE as string | undefined;
+const RAW_BASE = import.meta.env.VITE_API_BASE as string | undefined;
 export const API_BASE = (RAW_BASE ?? "").replace(/\/+$/, ""); // sin trailing slash
 
 if (!API_BASE) {

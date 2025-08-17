@@ -6,22 +6,35 @@
 app = 'unesum-api'
 primary_region = 'bog'
 
+[env]
+  LOG_LEVEL = "debug"
+  OPENAI_TIMEOUT = "20"
+  OPENAI_MAX_RETRIES = "2"
+  ALLOW_ORIGINS = "https://www.unesumrepo.com,http://localhost:5173"
+
+
 [build]
 
 [http_service]
-  internal_port = 8000
+  internal_port = 8080
   force_https = true
-  auto_stop_machines = 'stop'
   auto_start_machines = true
+  auto_stop_machines = true
   min_machines_running = 0
-  processes = ['app']
+
+  [http_service.checks]
+    grace_period = "60s"
+    interval = "10s"
+    timeout = "3s"
+    method = "GET"
+    path = "/healthz"
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 20
+    hard_limit = 40
 
 [[vm]]
   memory = '2gb'
   cpu_kind = 'shared'
   cpus = 2
-
-[mounts]
-  source = "data"
-  destination = "/data"
 

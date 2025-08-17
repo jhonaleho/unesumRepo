@@ -1,0 +1,8 @@
+# api/.dockerignore
+__pycache__/
+*.pyc
+.venv/
+.env
+
+# Puedes ignorar el mapping grande si lo tienes local:
+data/mapping.jsonl

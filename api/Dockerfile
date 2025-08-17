@@ -1,30 +1,25 @@
-# api/Dockerfile
 FROM python:3.11-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
-# System deps (mínimos). No usamos swig porque NO vamos a compilar FAISS.
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Copiamos solo requirements primero para cachear capas
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
-# Copiamos el código backend
-COPY app ./app
+COPY app /app/app
+# Copiamos SOLO el índice (ya está en el repo)
+COPY data/index.faiss /app/data/index.faiss
 
-# (Si el índice es pequeño y lo quieres hornear, descomenta)
-# COPY data ./data
-
-# Rutas y defaults (en Fly montaremos /data con un volumen)
+# Índice desde la imagen; mapping desde volumen /data
 ENV PORT=8080 \
     HOST=0.0.0.0 \
-    INDEX_PATH=/data/index.faiss \
+    INDEX_PATH=/app/data/index.faiss \
     MAPPING_PATH=/data/mapping.jsonl \
     EMBED_MODEL=text-embedding-3-small \
     EMBED_DIMENSIONS=512 \

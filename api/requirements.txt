@@ -1,3 +1,4 @@
+# api/requirements.txt
 fastapi==0.115.0
 uvicorn[standard]==0.30.5
 openai==1.43.0

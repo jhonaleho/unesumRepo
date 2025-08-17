@@ -14,3 +14,7 @@ web/.env.local
 # (Recomendado) NO subir índices grandes a GitHub
 
 api/data/mapping.jsonl
+
+# macOS
+.DS_Store
+**/.DS_Store
